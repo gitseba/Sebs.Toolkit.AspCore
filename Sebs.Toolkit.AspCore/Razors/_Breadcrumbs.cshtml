@@ -1,0 +1,40 @@
+﻿
+@{
+    Stack<KeyValuePair<string, string>> BreadCrumbs;
+    if (ViewData.ContainsKey("BreadCrumbs"))
+    {
+        BreadCrumbs = (Stack<KeyValuePair<string, string>>)ViewData["BreadCrumbs"];
+
+    }
+    else
+    {
+        BreadCrumbs = new Stack<KeyValuePair<string, string>>();
+    }
+    BreadCrumbs.Push(new KeyValuePair<string, string>("Home", "Home"));
+}
+
+
+<div class="breadcrumbs breadcrumbs-container">
+    <nav aria-label="Breadcrumb trail">
+        @while (BreadCrumbs.Count > 0)
+        {
+            var breadCrumb = BreadCrumbs.Pop();
+            if (BreadCrumbs.Count == 0)
+            {
+                <span class="breadcrumb-item active">@breadCrumb.Key</span>
+            }
+            else
+            {
+                <a class="breadcrumb-item" href="@breadCrumb.Value">@breadCrumb.Value</a>
+            }
+        }
+    </nav>
+</div>
+
+
+/*
+Usage:
+    var breadCrumbs = new Stack<KeyValuePair<string, string>>();
+    breadCrumbs.Push(new KeyValuePair<string, string>("Welcome", "Welcome"));
+    ViewData["BreadCrumbs"] = breadCrumbs;
+*/
